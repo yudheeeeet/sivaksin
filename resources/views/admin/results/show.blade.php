@@ -9,7 +9,7 @@
                         <div class="col-auto mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="activity"></i></div>
-                                Tambah Data Kegiatan 
+                                Tambah Data Kegiatan
                             </h1>
                             <div class="page-header-subtitle">Sistem Informasi Geografis Wilayah Tervaksinasi Covid-19 Kecamatan Semboro</div>
                         </div>
@@ -69,17 +69,30 @@
                                                                     <option value="{{ $item->id }}">{{ $item->jenis_vaksin }}</option>
                                                                     @endforeach
                                                                 </select>
-                                                            </div>  
-                                                            <div class="input-group mb-3">
-                                                                <input type="text" name="stock_used" class="form-control m-input" placeholder="Masyarakat Tervaksinasi" autocomplete="off">
                                                             </div>
-                                                            <div class="input-group-append">
+                                                           @foreach ($result as $rs)
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <label for="">Jenis Vaksin</label>
+                                                                    <input type="text" readonly name="" class="form-control" value="{{$rs->jenis_vaksin}}" id="">
+                                                                    <input type="hidden" readonly name="id_vaksin[]" class="form-control" value="{{$rs->id}}" id="">
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label for="">Stok Digunakan</label>
+                                                                    <input type="number" name="stock_used[]" class="form-control" value="{{$rs->jenis_vaksin}}" id="">
+                                                                </div>
+                                                            </div>
+                                                           @endforeach
+                                                            {{-- <div class="input-group mb-3">
+                                                                <input type="text" name="stock_used" class="form-control m-input" placeholder="Masyarakat Tervaksinasi" autocomplete="off">
+                                                            </div> --}}
+                                                            <div class="input-group-append mt-3">
                                                                 <a href="{{ route('event.index') }}" class="btn btn-primary">Kembali</a>
                                                             </div>
                                                             <br>
-                                                            <div class="input-group-append">
+                                                            {{-- <div class="input-group-append">
                                                                 <button id="removeRow" type="button" class="btn btn-danger">Remove</button>
-                                                            </div>
+                                                            </div> --}}
                                                         </div>
                                                         <div id="newRow"></div>
                                                     </div>
@@ -109,7 +122,7 @@
                         html += '@csrf';
                         html += '<div class="row">';
                         html += '<div class="mb-3" >';
-                            html += '<label></label>';  
+                            html += '<label></label>';
                             html += '<input class="form-control" type="hidden" name="event_id" value="{{ $event->id }}">';
                             html += '</div>';
                             html += '<div class="form-group">';
@@ -118,8 +131,8 @@
                                     html += '@foreach ($vaccine as $item)'
                                     html +=  '<option value="{{ $item->id }}">{{ $item->jenis_vaksin }}</option>'
                                     html +=  '@endforeach';
-                                    html += '</select>'; 
-                                    html += '</div>';         
+                                    html += '</select>';
+                                    html += '</div>';
                                     html += '<div class="input-group mb-3">';
                                         html += '<input type="text" name="title[]" class="form-control m-input" placeholder="Masyarakat Tervaksinasi" autocomplete="off">';
                                         html += '</div>';
@@ -127,10 +140,10 @@
                                             html += '<button id="removeRow" type="button" class="btn btn-danger">Remove</button>';
                                             html += '</div>';
                                             html +='</form>';
-                                            
+
                                             $('#newRow').append(html);
                                         });
-                                        
+
                                         // remove row
                                         $(document).on('click', '#removeRow', function () {
                                             $(this).closest('#inputFormRow').remove();
@@ -153,7 +166,7 @@
                             </div>
                         </footer>
                     </div>
-                    
+
                     @endsection
-                    
+
                     {{-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.764355136763!2d113.7059314744829!3d-8.17302042429141!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd6942e46a0c85d%3A0x7c04a93089d3ca57!2sJl.%20Sumatra%2C%20Tegal%20Boto%20Lor%2C%20Sumbersari%2C%20Kec.%20Sumbersari%2C%20Kabupaten%20Jember%2C%20Jawa%20Timur!5e0!3m2!1sid!2sid!4v1629877404256!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe> --}}

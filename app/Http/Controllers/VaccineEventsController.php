@@ -37,18 +37,23 @@ class VaccineEventsController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->validate($request, [
             'event_id' => 'required',
             'vaccine_id' => 'required',
             'stock_used' => 'required',
         ]);
+        Event::where('id', $request->event_id)->update(['status'=>'selesai']);
+        for ($i=0; $i < count($request->id_vaksin); $i++) {
+            $vaksin = Vaccine::where('id', $request->id_vaksin[$i])->first();
 
-        Result::create([
-            'event_id' => $request->event_id,
-            'vaccine_id' => $request->vaccine_id,
-            'stock_used' => $request->stock_used,
-        ]);
+            $tmp = (int)$vaksin->stock - (int)$request->stock_used[$i];
 
+            Vaccine::where('id',  $request->id_vaksin[$i])->update(['stock'=>$tmp]);
+            Result::where('event_id', $request->event_id)
+                ->where('vaccine_id', $request->id_vaksin[$i])
+                ->update(['stock_used'=>$request->stock_used[$i]]);
+        }
         return back();
     }
 
@@ -62,9 +67,12 @@ class VaccineEventsController extends Controller
     {
         $event = Event::findOrFail($id);
         $vaccine = Vaccine::all();
-        // return $vaccine;
-        
-        return view('admin.results.show', compact('event', 'vaccine'));
+        $result = Result::leftJoin('vaccine','vaccine.id', 'results.vaccine_id')
+            ->where('results.event_id', $id)
+            ->select('vaccine.jenis_vaksin', 'vaccine.id')->get();
+
+
+        return view('admin.results.show', compact('event', 'vaccine', 'result'));
     }
 
     /**

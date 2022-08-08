@@ -18,7 +18,7 @@
                 </div>
             </header>
             <!-- Main page content-->
-            <div class="container mt-n10">
+            <div class="container mt-n12">
                 @foreach ($event as $item)
                 <div class="card mb-4">
                     <div class="card-header"></div>
@@ -31,7 +31,7 @@
                             <p class="card-text">{{ date('Y-m-d, H:i:s', strtotime($item->tanggal_kegiatan))}} s/d selesai</p>
                             <p class="card-text">Status: {{ $item->status }}</p>
                             <p class="card-text">Deskripsi: {{ $item->deskripsi }}</p>
-                            <a href="{{ route('results.create') }}" class="btn btn-success">Lihat Hasil Kegiatan</a> <a href="{{ route('results.show', $item->id) }}" class="btn btn-primary">Kelola Hasil Kegiatan</a> <a href="#" class="btn btn-warning">Ubah Jadwal</a> 
+                            <a href="{{ route('results.create') }}" class="btn btn-success">Lihat Hasil Kegiatan</a> <a href="{{ route('results.show', $item->id) }}" class="btn btn-primary">Kelola Hasil Kegiatan</a> <a href="#" class="btn btn-warning">Ubah Jadwal</a>
                         </div>
                     </div>
                 </div>
@@ -51,5 +51,5 @@
             </footer>
         </div>
     </div>
-    
+
     @endsection

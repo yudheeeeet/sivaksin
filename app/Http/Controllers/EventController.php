@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Posko;
+use App\Models\Result;
+use App\Models\Vaccine;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -38,6 +40,7 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request;
         $this->validate($request, [
             'tanggal_kegiatan' => 'required',
             'petugas' => 'required',
@@ -45,14 +48,21 @@ class EventController extends Controller
             'deskripsi' => 'required',
         ]);
 
-        Event::create([
+       $event = Event::create([
             'posko_id' => $request->posko_id,
             'tanggal_kegiatan' => $request->tanggal_kegiatan,
             'petugas' => $request->petugas,
             'status' => $request->status,
             'deskripsi' => $request->deskripsi,
         ]);
-
+        for ($i=0; $i < count($request->vaccine_type); $i++) {
+            Result::create([
+                'event_id' => $event->id,
+                'vaccine_id' => $request->vaccine_type[$i],
+                'stock_used' => 0,
+                'stock_available' => $request->stock[$i],
+            ]);
+        }
         return redirect('/admin/event');
     }
 
@@ -65,7 +75,8 @@ class EventController extends Controller
     public function show($id)
     {
         $posko = Posko::findOrFail($id);
-        return view('admin.event.show', compact('posko'));
+        $vaksin = Vaccine::all();
+        return view('admin.event.show', compact('posko', 'vaksin'));
     }
 
     /**
