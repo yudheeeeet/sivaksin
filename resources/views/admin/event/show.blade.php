@@ -9,7 +9,7 @@
                             <div class="col-auto mt-4">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="activity"></i></div>
-                                    Tambah Kategori Umur
+                                    Tambah Data Jadwal Kegiatan
                                 </h1>
                                 <div class="page-header-subtitle">Sistem Informasi Geografis Wilayah Tervaksinasi Covid-19
                                     Kecamatan Semboro</div>
@@ -122,7 +122,7 @@
 
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-2">
+                                                                    <div class="col-md-2 align-self-end">
                                                                         <div class="form-group">
                                                                             <label for=""
                                                                                 style="visibility: hidden">p</label>
@@ -155,7 +155,7 @@
                     </div>
                 </div>
             </div>
-            
+@section('script')            
             <script>
                 $(document).ready(function() {
                     $("#addRow").click(function() {
@@ -164,7 +164,7 @@
                 });
             </script>
         </main>
-
+@endsection
 
 </div>
 

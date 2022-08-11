@@ -40,7 +40,7 @@ class VaccineEventsController extends Controller
 
         $this->validate($request, [
             'event_id' => 'required',
-            'vaccine_id' => 'required',
+            // 'vaccine_id' => 'required',
             'stock_used' => 'required',
         ]);
         Event::where('id', $request->event_id)->update(['status'=>'selesai']);
@@ -69,8 +69,8 @@ class VaccineEventsController extends Controller
         $vaccine = Vaccine::all();
         $result = Result::leftJoin('vaccine','vaccine.id', 'results.vaccine_id')
             ->where('results.event_id', $id)
-            ->select('vaccine.jenis_vaksin', 'vaccine.id')->get();
-
+            ->select('vaccine.jenis_vaksin', 'results.stock_available','vaccine.id')->get();
+        
 
         return view('admin.results.show', compact('event', 'vaccine', 'result'));
     }

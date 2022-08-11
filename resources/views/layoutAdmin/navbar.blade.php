@@ -39,7 +39,7 @@
                         </nav>
                     </div>
                     <div class="sidenav-menu-heading"></div>
-                    <a class="nav-link" href="charts.html">
+                    <a class="nav-link" href="{{ url('/admin/report') }}">
                         <div class="nav-link-icon"><i data-feather="bar-chart"></i></div>
                         Grafik Pelaksanaan Vaksinasi
                     </a>
@@ -49,7 +49,7 @@
             <div class="sidenav-footer">
                 <div class="sidenav-footer-content">
                     <div class="sidenav-footer-subtitle">Logged in as:</div>
-                    <div class="sidenav-footer-title">Valerie Luna</div>
+                    <div class="sidenav-footer-title">Koordinator Pelaksana Vaksinasi Covid-19 Regional Semboro</div>
                 </div>
             </div>
         </nav>

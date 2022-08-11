@@ -84,7 +84,7 @@ class RegionController extends Controller
         $region = Region::findOrFail($id);
         $region->update($input);
 
-        return redirect('/admin/admin')->with('status', 'data berhasil diperbarui');
+        return redirect('/admin/region')->with('status', 'data berhasil diperbarui');
     }
 
     /**

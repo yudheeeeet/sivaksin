@@ -31,6 +31,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/admin/admin', [AdminController::class, 'admin'])->name('admin')->middleware('Roles');
 Route::get('/admin/spasial', [AdminController::class, 'spasial'])->name('spasial');
+Route::get('/admin/report', [AdminController::class, 'report']);
 Route::resource('/admin/region', RegionController::class);
 Route::resource('/admin/vaccine', VaccineController::class);
 Route::resource('/admin/posko', PoskoController::class);

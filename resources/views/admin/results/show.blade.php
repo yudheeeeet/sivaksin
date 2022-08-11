@@ -30,8 +30,8 @@
                 <div class="col-xxl-4 col-xl-12 mb-4">
                     <div class="card h-100">
                         <div class="card-body h-100 d-flex flex-column justify-content-center py-5 py-xl-4">
-                            <div class="row align-items-center">
-                                <div class="col-xl-8 col-xxl-12">
+                            <div class="row">
+                                <div class=" col-xxl-12">
                                     <div class="text-center text-xl-left text-xxl-center px-4 mb-4 mb-xl-0 mb-xxl-4">
                                         @if ($errors->any())
                                         <div class="alert alert-warning">
@@ -62,42 +62,43 @@
                                                                 <label>Nama Posko</label>
                                                                 <input class="form-control" type="text" value="{{ $event->posko->nama_posko }}">
                                                             </div>
-                                                            <div class="form-group">
-                                                                <label for="exampleFormControlSelect1">Pilih Kategori Vaksin yang Digunakan</label>
-                                                                <select class="form-control" id="exampleFormControlSelect1" name="vaccine_id">
-                                                                    @foreach ($vaccine as $item)
-                                                                    <option value="{{ $item->id }}">{{ $item->jenis_vaksin }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
                                                            @foreach ($result as $rs)
                                                             <div class="row">
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-4">
                                                                     <label for="">Jenis Vaksin</label>
                                                                     <input type="text" readonly name="" class="form-control" value="{{$rs->jenis_vaksin}}" id="">
                                                                     <input type="hidden" readonly name="id_vaksin[]" class="form-control" value="{{$rs->id}}" id="">
                                                                 </div>
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-4">
                                                                     <label for="">Stok Digunakan</label>
-                                                                    <input type="number" name="stock_used[]" class="form-control" value="{{$rs->jenis_vaksin}}" id="">
+                                                                    <input type="number" name="stock_used[]" class="form-control" id="">
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <label for="">Stok Dibawa</label>
+                                                                    <input type="number" readonly name="" class="form-control" value="{{$rs->stock_available}}" id="">
                                                                 </div>
                                                             </div>
                                                            @endforeach
                                                             {{-- <div class="input-group mb-3">
                                                                 <input type="text" name="stock_used" class="form-control m-input" placeholder="Masyarakat Tervaksinasi" autocomplete="off">
                                                             </div> --}}
-                                                            <div class="input-group-append mt-3">
-                                                                <a href="{{ route('event.index') }}" class="btn btn-primary">Kembali</a>
-                                                            </div>
+                                                          
                                                             <br>
                                                             {{-- <div class="input-group-append">
                                                                 <button id="removeRow" type="button" class="btn btn-danger">Remove</button>
                                                             </div> --}}
                                                         </div>
-                                                        <div id="newRow"></div>
+                                                        {{-- <div id="newRow"></div>
+                                                        <div class="d-flex justify-content-between mb-3">
+                                                            <div></div>
+                                                            <button id="addRow" type="button" class="btn btn-info">Add Row</button>
+                                                        </div> --}}
                                                     </div>
                                                 </div>
-                                                <div class="modal-footer mb-3" style="align:right;">
+                                                <div class="modal-footer d-flex justify-content-between">
+                                                    <div class="input-group-append">
+                                                        <a href="{{ route('event.index') }}" class="btn btn-primary">Kembali</a>
+                                                    </div>
                                                     <button type="submit" class="btn btn-primary">Tambah</button>
                                                 </div>
                                             </form>
@@ -110,7 +111,7 @@
                     </div>
                 </div>
             </div>
-            <button id="addRow" type="button" class="btn btn-info">Add Row</button>
+            
         </div>
         @section('script')
         <script type="text/javascript">
