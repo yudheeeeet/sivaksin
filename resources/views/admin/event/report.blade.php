@@ -55,7 +55,7 @@
                 var yValues = [];
                 @foreach ($data as $dt)
                     yValues.push("{{ $dt->total }}");
-                    xValues.push('{{ $dt->nama_posko }}');
+                    xValues.push('{{ $dt->nama_desa }}');
                 @endforeach
                 console.log(yValues);
                 var barColors = "blue";

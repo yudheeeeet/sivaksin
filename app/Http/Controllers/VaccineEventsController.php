@@ -65,14 +65,18 @@ class VaccineEventsController extends Controller
      */
     public function show($id)
     {
-        $event = Event::findOrFail($id);
-        $vaccine = Vaccine::all();
-        $result = Result::leftJoin('vaccine','vaccine.id', 'results.vaccine_id')
-            ->where('results.event_id', $id)
-            ->select('vaccine.jenis_vaksin', 'results.stock_available','vaccine.id')->get();
-        
+        $data = Result::leftJoin('vaccine','vaccine.id', 'results.vaccine_id')
+                        ->leftJoin('events', 'events.id', 'results.event_id')
+                        ->where('results.event_id', $id)
+                        ->select('events.*', 'vaccine.*', 'results.*')
+                        ->get();
+                        $event = Event::findOrFail($id);
 
-        return view('admin.results.show', compact('event', 'vaccine', 'result'));
+                        $result = Result::leftJoin('vaccine','vaccine.id', 'results.vaccine_id')
+                            ->where('results.event_id', $id)
+                            ->select('vaccine.jenis_vaksin', 'results.stock_available','results.stock_used')->get();
+        // return $result;
+        return view('admin.results.edit', compact('result', 'event'));
     }
 
     /**
@@ -83,7 +87,14 @@ class VaccineEventsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $event = Event::findOrFail($id);
+        $vaccine = Vaccine::all();
+        $result = Result::leftJoin('vaccine','vaccine.id', 'results.vaccine_id')
+            ->where('results.event_id', $id)
+            ->select('vaccine.jenis_vaksin', 'results.stock_available','vaccine.id')->get();
+
+
+        return view('admin.results.show', compact('event', 'vaccine', 'result'));
     }
 
     /**

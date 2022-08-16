@@ -25,9 +25,10 @@ class AdminController extends Controller
     {
         $data = Result::leftJoin('events', 'events.id', 'results.event_id')
             ->join('posko', 'posko.id', 'events.posko_id')
-            ->select('results.event_id', DB::raw('sum(stock_used) as total'), 'posko.nama_posko')
+            ->join('regions', 'regions.id', 'posko.region_id')
+            ->select( DB::raw('sum(stock_used) as total'), 'regions.nama_desa')
             ->where('events.status', 'selesai')
-            ->groupBy('results.event_id', 'events.posko_id', 'posko.nama_posko')
+            ->groupBy('posko.region_id','regions.nama_desa')
             ->get();
         // return $data;
         return view('admin.event.report', compact('data'));
