@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\VaccineController;
 use App\Http\Controllers\PoskoController;
@@ -20,23 +21,34 @@ use App\Http\Controllers\VaccineEventsController;
 |
 */
 
-Route::get('/', function () {
-    return view('login');
+Route::get('/login', function () {
+    return view('auth.login');
 });
 
-Route::get('/', [IndexController::class, 'index']);
+// Route::get('/', [IndexController::class, 'index']);
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/admin/admin', [AdminController::class, 'admin'])->name('admin')->middleware('Roles');
-Route::get('/admin/spasial', [AdminController::class, 'spasial'])->name('spasial');
-Route::get('/admin/report', [AdminController::class, 'report']);
-Route::resource('/admin/region', RegionController::class);
-Route::resource('/admin/vaccine', VaccineController::class);
-Route::resource('/admin/posko', PoskoController::class);
-Route::resource('/admin/event', EventController::class);
-Route::resource('/admin/results', VaccineEventsController::class);
+Route::group(['middleware' => 'auth'], function () {
+
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/admin/admin', [AdminController::class, 'admin'])->name('admin')->middleware('Roles');
+    Route::get('/admin/spasial', [AdminController::class, 'spasial'])->name('spasial');
+    Route::get('/admin/report', [AdminController::class, 'report']);
+    Route::resource('/admin/region', RegionController::class);
+    Route::resource('/admin/vaccine', VaccineController::class);
+    Route::resource('/admin/posko', PoskoController::class);
+    Route::resource('/admin/event', EventController::class);
+    Route::resource('/admin/results', VaccineEventsController::class);
+    
+    Route::get('/user/user', [UserController::class, 'user'])->name('user')->middleware('Roles');
+    Route::get('/user/region', [UserController::class, 'region'])->name('region');
+    Route::get('/user/vaccine', [UserController::class, 'vaccine'])->name('vaccine');
+    Route::get('/user/posko', [UserController::class, 'posko'])->name('posko');
+    Route::get('/user/event', [UserController::class, 'event'])->name('event');
+    Route::get('/user/graphic', [UserController::class, 'graphic'])->name('graphic');
+    
+});
 
 
 

@@ -4,6 +4,8 @@
 @include('layouts.header')
 
 <body class="sb-nav-fixed">
+
+    @include('layouts.navbar')
     
     @yield('content')
     
