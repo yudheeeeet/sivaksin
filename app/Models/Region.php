@@ -20,10 +20,15 @@ class Region extends Model
 
     public static function sebaran(){
         $tb="regions";
-		$fq=DB::raw("nama_desa as nm, geojson, jumlah_sasaran AS aek, 0 as x1x2, 0 as powx1x2, 0 as s, 0 as z, '' as krit ");
+		$fq=DB::raw("nama_desa as nm, geojson, IFNULL(sum(results.stock_used),0) AS aek, 0 as x1x2, 0 as powx1x2, 0 as s, 0 as z, '' as krit ");
 		//init view
 		$retVal="";
-		$renderZ=DB::table("$tb")->select($fq)->get();
+		$renderZ=DB::table("$tb")->select($fq)
+		->leftJoin('posko', 'regions.id', 'posko.region_id')
+		->leftJoin('events', 'posko.id', 'events.posko_id')
+		->leftJoin('results', 'events.id', 'results.event_id')
+		->groupBy('regions.id')
+		->get();
 		$jum = 0;
 		$rata = 0;
 		$banyak = $renderZ->count();
