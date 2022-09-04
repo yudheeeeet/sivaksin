@@ -15,7 +15,8 @@ class UserController extends Controller
     public function user()
     {
         $region = Region::with('posko')->get();
-        return view('user.user', compact('region'));
+        $sebaran = Region::sebaran();
+        return view('user.user', compact('region', 'sebaran'));
     }
 
     public function region()

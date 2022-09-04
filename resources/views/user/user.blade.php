@@ -23,25 +23,22 @@
                                                 accessToken: 'pk.eyJ1IjoieXVkaGVlZWV0IiwiYSI6ImNrc2lremkzdjB0ZXkyb21iZDgwaWkyem0ifQ.zCNKGntSUcbbbojsPIjJ6g'
                                             });
                                             var vector_layer = L.layerGroup();
-                                            @foreach($region as $item)
-                                            @foreach ($item->posko as $posko)
-                                            L.marker([{{$posko['latitude']}} , {{$posko['longitude']}}])
-                                                .bindPopup(
-                                                '<b class="text-sm">{{$posko['nama_posko']}} <br> <a href="{{url('/detail', $item->id)}}" class="btn btn-primary btn-sm text-white">Detail</a>')
-                                                    .addTo(vector_layer)
-                                                    ;
-                                            @endforeach
-                                            L.geoJSON({!! $item['geojson'] !!} 
+                                            @foreach($sebaran as $index => $data)
+                                            @php $warna = ['#03cc3d', '#f9eb00', '#e20200']; @endphp
+                                            L.geoJSON({!! $data['geojson'] !!} 
                                             ,{
                                                 style: {
                                                     color: '#000',
-                                                    fillColor: '#ff7800',
+                                                    fillColor: "{{ $warna[$data['kategori']-1] }}",
                                                     fillOpacity: 1.0,
                                                     weight: 1,
                                                 }})
-                                                .addTo(vector_layer).bindTooltip('{{ $item['nama_desa'] }}');
+                                                .addTo(vector_layer).bindTooltip('Nama Desa: <?= $data['desa']."  - Jumlah: ".$data['jumlah'] ?>', {
+                                                    permanent: false,
+                                                    direction: 'left'
+                                                });
                                                 
-                                                @endforeach
+                                            @endforeach
                                                 var map = L.map('mapid', {
                                                     center: [-8.1949236,113.4385843],
                                                     zoom: 12,
