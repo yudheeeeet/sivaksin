@@ -14,7 +14,6 @@ class AdminController extends Controller
         $region = Region::with('posko')->get();
         
         $sebaran = Region::sebaran();
-		dd($sebaran);
         return view('admin.admin', compact('region', 'sebaran'));
     }
 
